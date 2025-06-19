@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingjin.mapper.WordMapper">
+
+    <!-- 检查单词是否存在 -->
+    <select id="existsByWord" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM words WHERE word = #{word})
+    </select>
+
+    <!-- 批量检查单词是否存在 -->
+    <select id="existsByWords" resultType="string">
+        SELECT word FROM words
+        WHERE word IN
+        <foreach collection="words" item="word" open="(" separator="," close=")">
+            #{word}
+        </foreach>
+    </select>
+
+    <!-- 插入新单词（修复keyProperty问题） -->
+    <insert id="insert" parameterType="com.qingjin.entity.Word"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO words (word, phonetic, definition, example)
+        VALUES (#{word}, #{phonetic}, #{definition}, #{example})
+    </insert>
+
+    <!-- 批量插入新单词（修复keyProperty问题） -->
+    <insert id="batchInsert" parameterType="list">
+        INSERT INTO words (word, phonetic, definition, example)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.word}, #{item.phonetic}, #{item.definition}, #{item.example})
+        </foreach>
+    </insert>
+
+    <!-- 获取单词ID -->
+    <select id="findIdByWord" resultType="long">
+        SELECT id FROM words WHERE word = #{word}
+    </select>
+
+    <!-- 批量获取单词ID -->
+    <select id="findIdsByWords" resultType="map">
+        SELECT word, id FROM words
+        WHERE word IN
+        <foreach collection="words" item="word" open="(" separator="," close=")">
+            #{word}
+        </foreach>
+    </select>
+</mapper>

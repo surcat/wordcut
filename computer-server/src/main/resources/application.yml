@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${qingjin.datasource.driver-class-name}
+      url: jdbc:mysql://${qingjin.datasource.host}:${qingjin.datasource.port}/${qingjin.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${qingjin.datasource.username}
+      password: ${qingjin.datasource.password}
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.qingjin.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: null
+  type-handlers-package: com.qingjin.handler  # 创建新的处理器包
+
+logging:
+  level:
+    com:
+      qingjin:
+        mapper: debug
+        service: info
+        controller: info
+
+user:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    key: qingjin
+    # 设置jwt过期时间 (2小时)
+    ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    token-name: token

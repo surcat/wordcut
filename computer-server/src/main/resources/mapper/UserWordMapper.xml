@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingjin.mapper.UserWordMapper">
+
+    <!-- 创建或更新用户单词关联 -->
+    <insert id="upsertUserWord">
+        INSERT INTO user_words (user_id, word_id, is_mastered, last_review)
+        VALUES (#{userId}, #{wordId}, #{isMastered}, #{lastReview})
+            ON DUPLICATE KEY UPDATE
+                                 last_review = VALUES(last_review)
+    </insert>
+
+    <!-- 批量创建用户单词关联 -->
+    <insert id="batchUpsertUserWords">
+        INSERT INTO user_words (user_id, word_id, is_mastered, last_review)
+        VALUES
+        <foreach collection="list" item="uw" separator=",">
+            (#{uw.userId}, #{uw.wordId}, #{uw.isMastered}, #{uw.lastReview})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        last_review = VALUES(last_review)
+    </insert>
+
+    <!-- 添加学习日志记录 -->
+    <insert id="addLog" parameterType="com.qingjin.entity.StudyLog">
+        INSERT INTO study_log (
+            user_id,
+            word_id,
+            operation_type,
+            log_date,
+            time_period,
+            created_at
+        )
+        VALUES (
+                   #{userId},
+                   #{wordId},
+                   #{operationType},
+                   #{logDate},
+                   #{timePeriod},
+                   now()
+               )
+    </insert>
+
+    <!-- 更新单词状态 Long user_id, Integer state, Long id-->
+    <update id="setState">
+        update user_words set is_mastered=#{state} where word_id = #{id} and user_id = #{user_id};
+    </update>
+    <update id="updateWord">
+        update study_data set today_word=(today_word + 1) where user_id = #{user_id};
+    </update>
+
+    <!-- 获取单词 -->
+    <select id="getWordList" resultType="com.qingjin.entity.Word">
+        SELECT * FROM (
+        <!-- 优化新词查询：从未学习过的单词 -->
+        (SELECT
+        w.*,
+        1 AS sort_order,
+        RAND() AS random_order,
+        NULL AS review_time
+        FROM words w
+        WHERE (
+        SELECT 1
+        FROM user_words uw
+        WHERE uw.word_id = w.id
+        AND uw.user_id = #{userId}  <!-- 使用一致的参数命名 -->
+        )
+        ORDER BY random_order
+        LIMIT #{dailyNew})
+
+        UNION ALL
+
+        <!-- 优化复习词查询：需要复习的单词 -->
+        (SELECT
+        w.*,
+        2 AS sort_order,
+        NULL AS random_order,
+        uw.last_review AS review_time
+        FROM words w
+        JOIN user_words uw ON w.id = uw.word_id
+        WHERE uw.user_id = #{userId}
+        AND uw.is_mastered &lt; 2
+        AND (uw.last_review IS NULL OR uw.last_review &lt;= CURDATE())
+        ORDER BY
+        CASE WHEN uw.last_review IS NULL THEN 0 ELSE 1 END, <!-- 优先处理从未复习的 -->
+        uw.last_review ASC  <!-- 然后按复习时间排序 -->
+        LIMIT #{dailyOld})
+        ) combined
+        ORDER BY
+        sort_order,  <!-- 先新词后复习词 -->
+        CASE WHEN sort_order = 1 THEN random_order END, <!-- 新词随机排序 -->
+        CASE WHEN sort_order = 2 THEN review_time END    <!-- 复习词按时间排序 -->
+    </select>
+
+    <select id="getWordMastered" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT word_id)
+        FROM study_log
+        WHERE user_id = #{id}
+            AND operation_type= 3
+    </select>
+    <select id="getWeeklyWordCount" resultType="com.qingjin.vo.DailyWordCount">
+        SELECT
+            log_date AS date,
+        COUNT(DISTINCT word_id) AS wordCount,
+        COUNT(*) AS operationCount
+        FROM study_log
+        WHERE user_id = #{userId}
+          AND log_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+        GROUP BY log_date
+        ORDER BY log_date ASC
+    </select>
+    <select id="getWeeklyWordMaster" resultType="com.qingjin.vo.DailyWordCount">
+        SELECT
+            log_date AS date,
+        COUNT(DISTINCT word_id) AS wordCount,
+        COUNT(*) AS operationCount
+        FROM study_log
+        WHERE user_id = #{userId}
+          AND log_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+          AND operation_type = 3
+        GROUP BY log_date
+        ORDER BY log_date ASC
+    </select>
+
+</mapper>

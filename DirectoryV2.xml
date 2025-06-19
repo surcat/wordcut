@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <trees>
+     <tree path="" title="项目父工程"/>
+     <tree path="/computer-command" title="公共类模块"/>
+     <tree path="/computer-pojo" title="实体类模块"/>
+     <tree path="/computer-server" title="后端服务模块"/>
+     <tree path="/DirectoryV2.xml" title="文件注释" extension="xml"/>
+     <tree path="/computer-command/src/main/java/com/qingjin/constant" title="常量类"/>
+     <tree path="/computer-command/src/main/java/com/qingjin/context" title="数据传输类"/>
+     <tree path="/computer-command/src/main/java/com/qingjin/enumeration" title="枚举类"/>
+     <tree path="/computer-command/src/main/java/com/qingjin/exception" title="自定义异常类"/>
+     <tree path="/computer-command/src/main/java/com/qingjin/json" title="JSON处理类"/>
+     <tree path="/computer-command/src/main/java/com/qingjin/properties" title="配置属性类"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/result" title="返回结果类"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/utils" title="工具类"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/dto" title="后端接收数据类"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity" title="实体类"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/vo" title="前端数据接收类"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/annotation" title="注解类"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/aspect" title="切面类"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/config" title="配置类"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/controller" title="业务层接口" icons="XmlBrowsersCanary"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/controller/admin" title="管理员"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/controller/user" title="用户"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/handler" title="问题解决器类"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/interceptor" title="拦截器"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/mapper" title="持久层接口" icons="XmlBrowsersCanary"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/service" title="逻辑层接口" icons="XmlBrowsersCanary"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/ComputerServerApplication.java" title="启动类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/constant/MessageConstant.java" title="消息提示常量类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/constant/PasswordConstant.java" title="密码常量类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/context/BaseContext.java" title="数据线程类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/enumeration/OperationType.java" title="操作类型枚举类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/properties/JwtProperties.java" title="JWT配置属性类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/properties/AliOssProperties.java" title="阿里OSS配置属性类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/result/PageResult.java" title="分页查询结果类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/result/Result.java" title="统一结果类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/utils/AliOssUtil.java" title="对象存储工具类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/utils/JwtUtil.java" title="JWT操作工具类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/json/JacksonObjectMapper.java" title="对象映射器"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/exception/BaseException.java" title="自定义异常基类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/constant/DataTimeFrontConstant.java" title="日期时间格式常量类"
+          extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/annotation/autofill" title="公共字段自动注入"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/annotation/autofill/AutoFillOperator.java" title="自动注入操作人"
+          extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/annotation/autofill/AutoFillTime.java" title="自动注入时间"
+          extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/annotation/mylog.java" title="日志消息注解类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/constant/AutoFillConstant.java" title="公共字段自动填充方法常量"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/constant/JwtClaimsConstant.java" title="JWT请求常量类"
+          extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/config/WebMvcConfiguration.java" title="web配置类"
+          extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/dto/LoginDTO.java" title="登录数据传输类" extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/aspect/AutoFillAspect.java" title="公共字段自动注入切面类"
+          extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/controller/user/LoginController.java" title="登录接口业务层"
+          extension="java" icons="XmlBrowsersChromium"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/handler/GlobalExceptionHandler.java" title="全局异常处理器"
+          extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/interceptor/JwtTokenAdminInterceptor.java"
+          title="jwt令牌校验的拦截器" extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/mapper/LoginMapper.java" title="登录接口持久层" extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/service/LoginService.java" title="登录接口逻辑层" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/exception/AccountNotExistException.java" title="账号不存在异常类"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/exception/PasswordErrorException.java" title="密码错误异常类"
+          extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/User.java" title="用户信息实体类" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/dto/RegisterDTO.java" title="注册数据传输对象" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/UserInformation.java" title="用户信息实体类" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/vo/LoginVO.java" title="登录前端数据接收类" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/vo/UserInformVO.java" title="用户信息前端数据接收类" extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/exception/AccountDataIllegalException.java" title="非法数据异常"
+          extension="java"/>
+    <tree path="/computer-command/src/main/java/com/qingjin/exception/AccountHadExistException.java" title="账号重名异常"
+          extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/LearnPlan.java" title="学习计划实体类" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/vo/LearnPlanVO.java" title="学习计划前端数据接收类" extension="java"/>
+   <tree path="/computer-pojo/src/main/java/com/qingjin/entity/Words.java" title="单词表实体类" extension="java"/>
+   <tree path="/computer-pojo/src/main/java/com/qingjin/dto/LearnPlanDTO.java" title="学习计划数据传输表" extension="java"/>
+    <tree path="/computer-server/src/main/java/com/qingjin/controller/user/WordController.java"
+          icons="XmlBrowsersChromium" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/Word.java" title="单词实体类" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/UserWord.java" title="用户单词表实体类" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/StudyData.java" title="学习登记表" extension="java"/>
+    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/StudyLog.java" title="学习日志表实体类" extension="java"/>
+
+</trees>
