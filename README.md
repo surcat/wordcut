@@ -16,11 +16,10 @@ java -jar word-learning-platform-1.0.0.jar
 ```
 
 ### 前端部署
-
-# 1. 将nginx放置在非中文路径（推荐：C:\apps\nginx）
-# 2. 启动nginx
-# 3. 访问应用
-> http://localhost:80
+  1. 将nginx放置在非中文路径（推荐：C:\apps\nginx）
+  2. 启动nginx
+  3. 访问应用
+    > http://localhost:80
 
 
 > **注意**：  
