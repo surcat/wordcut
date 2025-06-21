@@ -6,37 +6,22 @@
 ### 数据库配置
 1. 创建MySQL数据库用户
 2. 执行建表SQL脚本：
-```sql
--- 用户表结构示例
-CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 详细表结构见database_schema.sql文件
-```
 
 ### 后端服务启动
 **环境要求**：JDK 17
-```bash
-# 启动后端服务
-java -jar word-learning-platform-1.0.0.jar
 
-# 检查服务状态
-curl http://localhost:8080/api/health
+# 启动后端服务
+```bash
+java -jar word-learning-platform-1.0.0.jar
 ```
 
 ### 前端部署
-```bash
+
 # 1. 将nginx放置在非中文路径（推荐：C:\apps\nginx）
 # 2. 启动nginx
-start nginx.exe
-
 # 3. 访问应用
-http://localhost:80
-```
+> http://localhost:80
+
 
 > **注意**：  
 > - MySQL服务需预先启动（默认端口3306）  
