@@ -10,7 +10,7 @@
 ### 后端服务启动
 **环境要求**：JDK 17
 
-# 启动后端服务
+### 启动后端服务
 ```bash
 java -jar word-learning-platform-1.0.0.jar
 ```
