@@ -105,7 +105,7 @@
         COUNT(*) AS operationCount
         FROM study_log
         WHERE user_id = #{userId}
-          AND log_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+          AND log_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE() AND operation_type = 3
         GROUP BY log_date
         ORDER BY log_date ASC
     </select>

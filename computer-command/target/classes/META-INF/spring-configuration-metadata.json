@@ -52,6 +52,12 @@
       "name": "user.jwt.ttl",
       "type": "java.lang.Long",
       "sourceType": "com.qingjin.properties.JwtProperties"
+    },
+    {
+      "name": "user.jwt.ttl",
+      "type": "java.lang.Long",
+      "sourceType": "com.qingjin.properties.JwtProperties",
+      "defaultValue": 0
     }
   ],
   "hints": []

@@ -90,7 +90,7 @@
    <tree path="/computer-pojo/src/main/java/com/qingjin/entity/Words.java" title="单词表实体类" extension="java"/>
    <tree path="/computer-pojo/src/main/java/com/qingjin/dto/LearnPlanDTO.java" title="学习计划数据传输表" extension="java"/>
     <tree path="/computer-server/src/main/java/com/qingjin/controller/user/WordController.java"
-          icons="XmlBrowsersChromium" extension="java"/>
+          icons="XmlBrowsersChromium" extension="java" title="单词处理接口业务层"/>
     <tree path="/computer-pojo/src/main/java/com/qingjin/entity/Word.java" title="单词实体类" extension="java"/>
     <tree path="/computer-pojo/src/main/java/com/qingjin/entity/UserWord.java" title="用户单词表实体类" extension="java"/>
     <tree path="/computer-pojo/src/main/java/com/qingjin/entity/StudyData.java" title="学习登记表" extension="java"/>

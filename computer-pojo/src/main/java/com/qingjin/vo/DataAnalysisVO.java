@@ -1,4 +1,4 @@
-package com.qingjin.dto;
+package com.qingjin.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 // DashboardSummaryDTO.java - 聚合数据DTO
-public class DashboardSummaryDTO {
-    private Integer totalLearningDays;
-    private Integer continuousLearningDays;
-    private Integer masteredWords;
+public class DataAnalysisVO {
+    private Long totalLearningDays;
+    private Long continuousLearningDays;
+    private Long masteredWords;
     private Double averageEfficiency;
     private Double memoryPersistence;
     private Double masteredWordsChange;

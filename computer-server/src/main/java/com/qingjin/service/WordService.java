@@ -8,6 +8,7 @@ import com.qingjin.mapper.LoginMapper;
 import com.qingjin.mapper.UserWordMapper;
 import com.qingjin.mapper.WordMapper;
 import com.qingjin.vo.DailyWordCount;
+import com.qingjin.vo.DataAnalysisVO;
 import com.qingjin.vo.InformCardVO;
 import com.qingjin.vo.StudyDanciVO;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -328,8 +330,10 @@ public class WordService {
         LearnPlan learnPlan = loginMapper.getLearnPlan(user_id);
         UserInformation inform = loginMapper.getUserInformByUserId(user_id);
 
+        // 获取掌握单词总数
         long wordMastered = userWordMapper.getWordMastered(user_id);
 
+        // 获取
         List<DailyWordCount> dailyWordList = getWeeklyWordCount(user_id);
         Long lastWeekLearned = 0L;
         for (int i = 0; i < dailyWordList.size(); i++) {
@@ -354,7 +358,7 @@ public class WordService {
         }
 
         // 计算相距天数（自动处理闰年/闰月）
-        long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), learnPlan.getTargetData());
+        long daysBetween = ChronoUnit.DAYS.between(LocalDate.now(), learnPlan.getTargetData()==null?LocalDate.now() : learnPlan.getTargetData());
 
         List<Integer> efficiencyDataList = new ArrayList<>();
         lastWeekMasterList.forEach(dailyWordCount -> efficiencyDataList.add(dailyWordCount.getWordCount()));
@@ -443,5 +447,99 @@ public class WordService {
             log.error("获取周学习量失败: 用户={}, 错误={}", userId, e.getMessage());
             return Collections.emptyList();
         }
+    }
+
+    /**
+     * 数据分析接口
+     * @param user_id
+     * @return
+     */
+    public DataAnalysisVO dataAnalysis(Long user_id) {
+        StudyData studyData = userWordMapper.getStudyDataById(user_id);
+        loginMapper.sumLearnWord(user_id);
+        LearnPlan learnPlan = loginMapper.getLearnPlan(user_id);
+        UserInformation inform = loginMapper.getUserInformByUserId(user_id);
+
+        // 已掌握单词数据
+        long wordMastered = userWordMapper.getWordMastered(user_id);
+
+        List<DailyWordCount> dailyWordList = getWeeklyWordCount(user_id);
+        Long lastWeekLearned = 0L;
+        for (int i = 0; i < dailyWordList.size(); i++) {
+            lastWeekLearned += dailyWordList.get(i).getWordCount();
+        }
+
+        List<DailyWordCount> lastWeekMasterList = getWeeklyWordMaster(user_id);
+        Long lastWeekMaster = 0L;
+        for (int i = 0; i < lastWeekMasterList.size(); i++) {
+            lastWeekMaster += lastWeekMasterList.get(i).getWordCount();
+        }
+
+        int totalToday = learnPlan.getDailyNew() + learnPlan.getDailyOld();
+
+        Long predictTime = 0L;
+        // 预计用时
+        if(( lastWeekMaster / 7 / 24) > 0){
+            predictTime =  ( totalToday / ( lastWeekMaster / 7 / 24) ) * 60;
+        }
+        else {
+            predictTime = ( totalToday / 20L ) * 60;
+        }
+
+        Double averageEfficiency = (double)inform.getLearnWord() / inform.getLearnDay();
+        BigDecimal avg = new BigDecimal(averageEfficiency);
+        double avg_form = avg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+
+        Double efficiencyChange = (double) lastWeekMaster / 7 ;
+        Double ecchange = (averageEfficiency - efficiencyChange) / efficiencyChange;
+        log.info("【学习效率变化率】：{}",ecchange);
+        double ec_change = 0;
+        if(ecchange.isNaN()){
+            log.info("【学习效率变化率】【NaN异常】");
+            ec_change = Double.NaN;
+        }
+        else {
+            avg = new BigDecimal(ecchange);
+            ec_change = avg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+
+
+        Double memoryPersistence =(double) wordMastered / inform.getLearnWord();
+
+        Double persistenceChange = (double) lastWeekMaster / (double) lastWeekLearned ;
+        Double pcchange = (memoryPersistence - persistenceChange) / persistenceChange;
+
+        double pc_change = 0;
+        if(pcchange.isNaN()){
+            pc_change = Double.NaN;
+        }
+        else {
+            avg = new BigDecimal(pcchange);
+            pc_change = avg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+
+
+
+        Double mwchange =((double)wordMastered - (double)lastWeekMaster) / (double)lastWeekMaster;
+        double mw_change = 0;
+        if (mwchange.isNaN()){
+            mw_change = Double.NaN;
+        }
+        else {
+            avg = new BigDecimal(mwchange);
+            mw_change = avg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+
+        DataAnalysisVO dataAnalysisVO = DataAnalysisVO.builder()
+                .totalLearningDays(inform.getLearnDay())
+                .continuousLearningDays(3L)
+                .masteredWords(wordMastered)
+                .masteredWordsChange(mw_change)
+                .averageEfficiency(avg_form)
+                .memoryPersistence(memoryPersistence)
+                .efficiencyChange(ec_change)
+                .persistenceChange(pc_change).build();
+
+        return dataAnalysisVO;
     }
 }

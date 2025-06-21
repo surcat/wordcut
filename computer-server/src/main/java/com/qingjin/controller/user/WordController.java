@@ -1,6 +1,7 @@
 package com.qingjin.controller.user;
 
 import com.qingjin.context.BaseContext;
+import com.qingjin.vo.DataAnalysisVO;
 import com.qingjin.vo.InformCardVO;
 import com.qingjin.dto.StudyLogDTO;
 import com.qingjin.entity.Word;
@@ -92,15 +93,28 @@ public class WordController {
 
     @CrossOrigin
     @GetMapping("/informCard")
-    @ApiOperation("学习日志保存接口")
+    @ApiOperation("用户快捷信息加载接口")
     public Result<InformCardVO> informCard(){
         Long user_id =(Long) BaseContext.getContext();
         log.info("获取到学习日志保存请求，【用户{}】",user_id);
 
-        // 记录日志
+        // 加载数据
         InformCardVO informCardVO = wordService.informCard(user_id);
 
         return Result.success(informCardVO,"学习信息卡");
+    }
+
+    @CrossOrigin
+    @GetMapping("/analysis")
+    @ApiOperation("数据分析加载接口")
+    public Result<DataAnalysisVO> dataAnalysis(){
+        Long user_id =(Long) BaseContext.getContext();
+        log.info("获取到数据分析加载请求，【用户{}】",user_id);
+
+        // 进行结果分析
+        DataAnalysisVO dataAnalysisVO = wordService.dataAnalysis(user_id);
+
+        return Result.success(dataAnalysisVO,"数据分析");
     }
 
 }

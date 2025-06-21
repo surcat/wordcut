@@ -4,5 +4,5 @@ qingjin:
     host: localhost
     port: 3306
     database: wordcut
-    username: root
-    password: 155275
+    username: guest
+    password: 123456

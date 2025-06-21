@@ -4,16 +4,21 @@
 <mapper namespace="com.qingjin.mapper.LoginMapper">
 
     <update id="updateLearnDay">
-        update user_information ui inner join study_data sd on ui.user_id = sd.user_id
-        set learn_day = (learn_day + 1),
-          today_word = 0
+        update user_information ui inner join study_data sd
+        on ui.user_id = sd.user_id
+            set learn_day = (learn_day + 1),
+                today_word = 0
         where sd.user_id = #{id}
-        and sd.last_time &lt; now();
+          and sd.last_time
+         &lt; now();
     </update>
     <update id="sumLearnWord">
-        update user_information set learn_word=(SELECT COUNT(DISTINCT word_id)
-                                                FROM study_log
-                                                WHERE user_id = #{id}) where user_id = #{id};
+        update user_information
+        set learn_word=(SELECT COUNT(DISTINCT word_id)
+                        FROM study_log
+                        WHERE user_id = #{id}
+                          AND operation_type = 3)
+        where user_id = #{id};
     </update>
     <select id="getStudyLogById">
 
